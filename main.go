@@ -29,7 +29,7 @@ func main() {
 	fmt.Println(module)
 
 	// テンプレートファイルコピー
-	fromFile := filepath.Join(dir, "goinit", "template", config.DefFilename)
+	fromFile := filepath.Join(GetHomeDir(), config.TemplateDir, "goinit", "template", config.DefFilename)
 	toFile := filepath.Join(targetDir, file)
 	CopyFile(fromFile, toFile)
 
