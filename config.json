@@ -1,5 +1,6 @@
 {
-  "DefDir"       : "dev/Golang_study/",
+  "DefDir"       : "dev/golang-study",
+  "TemplateDir"  : "dev/go-tools",
   "DefFilename"  : "main.go",
   "LogFinename"  : "goinit.log"
 }

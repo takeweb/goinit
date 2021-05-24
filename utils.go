@@ -18,6 +18,7 @@ import (
 
 type Configuration struct {
 	DefDir      string
+	TemplateDir string
 	DefFilename string
 	LogFinename string
 }
@@ -148,6 +149,8 @@ func GetHomeDir() string {
 	home := os.Getenv("HOME")
 	if home == "" && runtime.GOOS == "windows" {
 		homeDir = os.Getenv("HOMEPATH")
+	} else {
+		homeDir = home
 	}
 	return homeDir
 }
