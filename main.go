@@ -30,7 +30,7 @@ func main() {
 
 	// テンプレートファイルコピー
 	fromFile := filepath.Join(GetHomeDir(), config.TemplateDir, "goinit", "template", config.DefFilename)
-	toFile := filepath.Join(targetDir, file)
+	toFile := filepath.Join(targetDir, file+".go")
 	CopyFile(fromFile, toFile)
 
 	// ターゲットディレクトリへ移動
