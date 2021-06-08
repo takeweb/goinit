@@ -15,7 +15,7 @@ func main() {
 	var file string
 
 	// コマンドライン引数取得
-	flag.StringVar(&module, "m", "test", "mosule to make")
+	flag.StringVar(&module, "m", "test", "module to make")
 	flag.StringVar(&dir, "d", filepath.Join(GetHomeDir(), config.DefDir), "base dir to make")
 	flag.StringVar(&file, "f", config.DefFilename, "filename to make")
 	flag.Parse()
@@ -29,7 +29,7 @@ func main() {
 	fmt.Println(module)
 
 	// テンプレートファイルコピー
-	fromFile := filepath.Join(GetHomeDir(), config.TemplateDir, "goinit", "template", config.DefFilename)
+	fromFile := filepath.Join(GetHomeDir(), config.TemplateDir, config.DefFilename+".go")
 	toFile := filepath.Join(targetDir, file+".go")
 	CopyFile(fromFile, toFile)
 
