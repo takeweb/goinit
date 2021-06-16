@@ -2,8 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
-	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -23,10 +21,10 @@ func main() {
 	// ディレクトリ作成
 	targetDir := filepath.Join(dir, module)
 	if err := os.MkdirAll(targetDir, 0755); err != nil {
-		log.Fatal(err)
+		error(err)
 		os.Exit(1)
 	}
-	fmt.Println(module)
+	info("module:", module)
 
 	// テンプレートファイルコピー
 	fromFile := filepath.Join(GetHomeDir(), config.TemplateDir, config.DefFilename+".go")
@@ -35,22 +33,22 @@ func main() {
 
 	// ターゲットディレクトリへ移動
 	if err := os.Chdir(targetDir); err != nil {
-		log.Fatal(err)
+		error(err)
 		os.Exit(1)
 	}
 
 	// カレントディレクトリを取得
 	currentDir, err := os.Getwd()
 	if err != nil {
-		log.Fatal(err)
+		error(err)
 		os.Exit(1)
 	}
-	fmt.Println(currentDir)
+	info("target_dir:", currentDir)
 
 	// 外部コマンド実行
 	err_o := exec.Command("go", "mod", "init", module).Run()
 	if err_o != nil {
-		log.Fatal(err)
+		error(err)
 		os.Exit(1)
 	}
 }
