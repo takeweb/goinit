@@ -18,7 +18,7 @@ func main() {
 	flag.StringVar(&file, "f", config.DefFilename, "filename to make")
 	flag.Parse()
 
-	// ディレクトリ作成
+	// ターゲットディレクトリ作成
 	targetDir := filepath.Join(dir, module)
 	if err := os.MkdirAll(targetDir, 0755); err != nil {
 		error(err)
@@ -45,10 +45,35 @@ func main() {
 	}
 	info("target_dir:", currentDir)
 
-	// 外部コマンド実行
+	// 外部コマンド実行(go mod init <module>)
 	err_o := exec.Command("go", "mod", "init", module).Run()
 	if err_o != nil {
 		error(err)
 		os.Exit(1)
+	}
+
+	// 一階層上のディレクトリへ移動
+	if err := os.Chdir(dir); err != nil {
+		error(err)
+		os.Exit(1)
+	}
+	info("dir:", dir)
+
+	// go.workの存在チェック
+	f := "go.work"
+	if _, err := os.Stat(f); err == nil {
+		// 外部コマンド実行(go work use <module>)
+		err_o := exec.Command("go", "work", "use", module).Run()
+		if err_o != nil {
+			error(err)
+			os.Exit(1)
+		}
+	} else {
+		// 外部コマンド実行(go work init <module>)
+		err_o := exec.Command("go", "work", "init", module).Run()
+		if err_o != nil {
+			error(err)
+			os.Exit(1)
+		}
 	}
 }

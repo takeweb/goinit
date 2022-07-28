@@ -6,4 +6,5 @@ cp ./config.json ~/.config/goinit/
 cp -R ./template ~/.config/goinit/
 
 # 普通に使えるコマンド化
-go install goinit
+#go install goinit
+cp goinit /opt/homebrew/opt/go/bin/
