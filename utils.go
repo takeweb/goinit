@@ -6,6 +6,7 @@ import (
 	"log"
 	"path/filepath"
 	"runtime"
+	"strings"
 
 	"os"
 )
@@ -102,4 +103,22 @@ func GetHomeDir() string {
 		homeDir = home
 	}
 	return homeDir
+}
+
+// カレントディレクトリを取得
+func GetCurrentDir() string {
+	currentDir, err := os.Getwd()
+	if err != nil {
+		error(err)
+		os.Exit(1)
+	}
+	info("target_dir:", currentDir)
+	return currentDir
+}
+
+// モジュールパスからディレクトリ名を取得
+func GetPathFromModule(module string) string {
+	module_path := strings.Split(module, "/")
+	dirName := module_path[len(module_path)-1]
+	return dirName
 }
