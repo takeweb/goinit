@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 )
 
 func main() {
@@ -18,8 +19,10 @@ func main() {
 	flag.StringVar(&file, "f", config.DefFilename, "filename to make")
 	flag.Parse()
 
+	module_path := strings.Split(module, "/")
+
 	// ターゲットディレクトリ作成
-	targetDir := filepath.Join(dir, module)
+	targetDir := filepath.Join(dir, module_path[len(module_path)-1])
 	if err := os.MkdirAll(targetDir, 0755); err != nil {
 		error(err)
 		os.Exit(1)
@@ -30,6 +33,11 @@ func main() {
 	fromFile := filepath.Join(GetHomeDir(), config.TemplateDir, config.DefFilename+".go")
 	toFile := filepath.Join(targetDir, file+".go")
 	CopyFile(fromFile, toFile)
+
+	// Makeファイルコピー
+	fromFile2 := filepath.Join(GetHomeDir(), config.TemplateDir, "Makefile")
+	toFile2 := filepath.Join(targetDir, "Makefile")
+	CopyFile(fromFile2, toFile2)
 
 	// ターゲットディレクトリへ移動
 	if err := os.Chdir(targetDir); err != nil {
